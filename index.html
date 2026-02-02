@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hey! I Have Some Questions... 🤔</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile-fix.css">
 </head>
+
 <body>
     <canvas id="confetti-canvas"></canvas>
-    
+
     <div class="container">
         <!-- Landing Screen -->
         <div id="landing-screen" class="screen active">
@@ -43,7 +48,7 @@
                 <p class="final-text">Want to hang out this Sunday?</p>
                 <p class="final-subtext">We could grab food, explore somewhere new, or just chill!</p>
                 <p class="final-prompt">What do you say? 😊</p>
-                
+
                 <div class="final-buttons">
                     <button class="btn btn-yes" id="yes-btn" onclick="handleYes()">
                         Yes! Sounds fun! 🎊
@@ -52,7 +57,7 @@
                         Let me think... 🤔
                     </button>
                 </div>
-                
+
                 <p class="reconsider-message" id="reconsider-message"></p>
             </div>
         </div>
@@ -72,4 +77,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
