@@ -61,6 +61,7 @@ const reconsiderMessages = {
 let currentQuestion = 0;
 let noClickCount = 0;
 let startTime;
+let userAnswers = []; // Track user's answers
 
 function startQuiz() {
     startTime = Date.now();
@@ -90,6 +91,12 @@ function showQuestion() {
 }
 
 function selectAnswer(answerIndex) {
+    // Store the user's answer
+    userAnswers.push({
+        question: questions[currentQuestion].question,
+        answer: questions[currentQuestion].answers[answerIndex]
+    });
+
     currentQuestion++;
 
     if (currentQuestion < questions.length) {
@@ -207,6 +214,12 @@ function handleYes() {
 }
 
 function sendEmailNotification(totalTime) {
+    // Format answers for email
+    let answersText = '';
+    userAnswers.forEach((item, index) => {
+        answersText += `Q${index + 1}: ${item.question}\nA: ${item.answer}\n\n`;
+    });
+
     const templateParams = {
         to_email: 'nishuanshad@gmail.com', // ← Replace with YOUR email
         subject: '🎉 SHE SAID YES! Sunday Plans Confirmed!',
@@ -219,7 +232,8 @@ function sendEmailNotification(totalTime) {
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
-        })
+        }),
+        user_answers: answersText
     };
 
     emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
