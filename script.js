@@ -1,3 +1,14 @@
+// EmailJS Configuration
+// IMPORTANT: Replace these with your actual EmailJS credentials
+const EMAILJS_PUBLIC_KEY = 'SWC2-g6JKYPKan4z-'; // Get from https://dashboard.emailjs.com/admin/account
+const EMAILJS_SERVICE_ID = 'service_u745apb'; // Get from https://dashboard.emailjs.com/admin
+const EMAILJS_TEMPLATE_ID = 'template_8dtx1x9'; // Get from https://dashboard.emailjs.com/admin/templates
+
+// Initialize EmailJS
+(function () {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+})();
+
 const questions = [
     {
         question: "entha paaad....😊",
@@ -111,7 +122,7 @@ function handleNo() {
         messages = reconsiderMessages.stage;
         content.style.borderColor = '#ffe4b5';
     } else {
-        messages = reconsiderMessages.stage1;
+        messages = reconsiderMessages.stage;
         content.style.borderColor = '#ffb3ba';
         content.style.animation = 'shake 0.5s';
         setTimeout(() => {
@@ -186,10 +197,37 @@ function handleYes() {
     const endTime = Date.now();
     const totalTime = Math.floor((endTime - startTime) / 1000);
 
+    // Send email notification
+    sendEmailNotification(totalTime);
+
     hideScreen('final-screen');
     showScreen('success-screen');
     showAchievements(totalTime);
     launchConfetti();
+}
+
+function sendEmailNotification(totalTime) {
+    const templateParams = {
+        to_email: 'nishuanshad@gmail.com', // ← Replace with YOUR email
+        subject: '🎉 SHE SAID YES! Sunday Plans Confirmed!',
+        total_time: totalTime,
+        no_clicks: noClickCount,
+        timestamp: new Date().toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function (response) {
+            console.log('✅ Email sent successfully!', response.status, response.text);
+        }, function (error) {
+            console.log('❌ Email failed to send:', error);
+        });
 }
 
 function showAchievements(totalTime) {
