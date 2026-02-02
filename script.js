@@ -1,76 +1,50 @@
 const questions = [
     {
-        question: "If you were a vegetable, would you be a confused potato or an anxious carrot?",
+        question: "entha paaad....😊",
         answers: [
-            "Definitely a confused potato 🥔",
-            "100% an anxious carrot 🥕",
-            "Neither, I'd be a dramatic broccoli 🥦",
-            "I refuse to be a vegetable"
+            "Nalla Paad",
+            "Not Good",
+            "Enthum Paaadum",
+            "Inganokke Pooovn"
         ]
     },
     {
-        question: "On a scale of 1-10, how much do you believe pigeons are government drones?",
+        question: "hows Daddy Mummy Doooin",
         answers: [
-            "10 - They're DEFINITELY spying on us 🕊️",
-            "5 - I'm suspicious but not convinced",
-            "1 - That's ridiculous... right?",
-            "11 - I have evidence!"
+            "Good",
+            "Not Good",
+            "So So",
+            "Alhamdhulillha khair ❤️"
         ]
     },
     {
-        question: "Would you rather fight 100 duck-sized horses or 1 horse-sized duck?",
+        question: "perelthe Pain Pnai okke keynjaaa",
         answers: [
-            "100 duck-sized horses (bring it on!)",
-            "1 horse-sized duck (one big battle)",
-            "Can I befriend them instead?",
-            "I choose to run away"
-        ]
-    },
-    {
-        question: "Is cereal a soup? (Your answer will be judged)",
-        answers: [
-            "Yes, and I will die on this hill 🥣",
-            "Absolutely not, you monster",
-            "Only if milk is a broth",
-            "I've never thought about this and now I'm scared"
-        ]
-    },
-    {
-        question: "If you could only eat one food for the rest of your life, would you choose pizza or tacos?",
-        answers: [
-            "Pizza forever! 🍕",
-            "Tacos all the way! 🌮",
-            "Can I have both?",
-            "Neither, I choose chaos"
+            "Illya",
+            "Keynj",
+            "korchoode nd"
         ]
     }
 ];
 
 const reconsiderMessages = {
-    stage1: [
+    stage: [
+        "Ayy Angane Parayerdh",
         "Come on, reconsider! It'll be fun! 🥺",
-        "Are you sure? I promise it'll be awesome! 🌟",
-        "Please? Pretty please? 🙏"
-    ],
-    stage2: [
-        "Think about all the fun we'll have! 🎊",
-        "I'll buy you food... 🍕",
-        "I'll let you pick the place! 🎯",
-        "We can do whatever you want! ✨"
-    ],
-    stage3: [
-        "PLEASE! I'm literally begging! 🙏",
-        "My Sunday will be so boring without you! 😭",
-        "Don't leave me hanging! 💔",
-        "You're breaking my heart here! 😢"
-    ],
-    stage4: [
-        "Fine, I'll do your homework for a week! 📚",
-        "I'll give you my Netflix password! 📺",
-        "I'll be your personal chef! 👨‍🍳",
-        "I'll carry your bag for a month! 🎒",
-        "JUST SAY YES ALREADY! 😤"
+        "Please? Pretty please? 🙏",
+        "Onnooode Onn Aalooychookka",
+        "Koreee Ayeeele Ingne Irikkn",
+        "Cmmooon Yaaar😒",
+        "Orappaano   😢",
+        "Anakkavde Pani Onnullyallo   🚶",
+        "Perelingane Verthe Irikkylle",
+        "Sherikkm",
+        "You're breaking my heart here! 😢",
+        "You are Not Minding My Efforts 💔",
+        "Andoru Deman Kaanumbo aaaaan",
+        "Orappicho😏"
     ]
+
 };
 
 let currentQuestion = 0;
@@ -130,14 +104,14 @@ function handleNo() {
     let messages;
 
     if (noClickCount <= 3) {
-        messages = reconsiderMessages.stage1;
+        messages = reconsiderMessages.stage;
     } else if (noClickCount <= 6) {
-        messages = reconsiderMessages.stage2;
+        messages = reconsiderMessages.stage;
     } else if (noClickCount <= 10) {
-        messages = reconsiderMessages.stage3;
+        messages = reconsiderMessages.stage;
         content.style.borderColor = '#ffe4b5';
     } else {
-        messages = reconsiderMessages.stage4;
+        messages = reconsiderMessages.stage1;
         content.style.borderColor = '#ffb3ba';
         content.style.animation = 'shake 0.5s';
         setTimeout(() => {
@@ -222,21 +196,21 @@ function showAchievements(totalTime) {
     const achievements = [];
 
     if (totalTime < 30) {
-        achievements.push("⚡ Speed Demon - Answered in under 30 seconds!");
+        achievements.push("Appo Sheri");
     }
 
     if (noClickCount === 0) {
-        achievements.push("💖 Best Friend - Said yes immediately!");
+        achievements.push("💖 Allenkilum Ink Ariyaayirn Ijj Verm nnn");
     } else if (noClickCount >= 10) {
-        achievements.push("😤 Stubborn - Clicked 'No' 10+ times!");
+        achievements.push("😤 Enthina Ithrekk Demand");
     } else if (noClickCount >= 5) {
-        achievements.push("🤔 Overthinker - Needed some convincing!");
+        achievements.push("🤔 Nerthe Thanne Sammeychoode");
     }
 
     if (achievements.length > 0) {
         const achievementText = document.createElement('div');
         achievementText.className = 'achievements';
-        achievementText.innerHTML = '<h3>Achievements Unlocked!</h3>' +
+        achievementText.innerHTML =
             achievements.map(a => `<p>${a}</p>`).join('');
         document.querySelector('#success-screen .content').appendChild(achievementText);
     }
