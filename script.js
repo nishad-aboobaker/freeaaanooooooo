@@ -2,7 +2,7 @@
 // IMPORTANT: Replace these with your actual EmailJS credentials
 const EMAILJS_PUBLIC_KEY = 'SWC2-g6JKYPKan4z-'; // Get from https://dashboard.emailjs.com/admin/account
 const EMAILJS_SERVICE_ID = 'service_u745apb'; // Get from https://dashboard.emailjs.com/admin
-const EMAILJS_TEMPLATE_ID = 'template_8dtx1x9'; // Get from https://dashboard.emailjs.com/admin/templates
+const EMAILJS_TEMPLATE_ID = 'template_8dtx1x9'; // Template for "YES" response
 
 // Initialize EmailJS
 (function () {
@@ -11,7 +11,7 @@ const EMAILJS_TEMPLATE_ID = 'template_8dtx1x9'; // Get from https://dashboard.em
 
 const questions = [
     {
-        question: "entha paaad....😊",
+        question: "entha paaad....😌",
         answers: [
             "Nalla Paad",
             "Not Good",
@@ -242,6 +242,56 @@ function sendEmailNotification(totalTime) {
         }, function (error) {
             console.log('❌ Email failed to send:', error);
         });
+}
+
+function sendClosedNotification() {
+    const endTime = Date.now();
+    const totalTime = startTime ? Math.floor((endTime - startTime) / 1000) : 0;
+
+    // Format answers for email
+    let answersText = '';
+    if (userAnswers.length > 0) {
+        userAnswers.forEach((item, index) => {
+            answersText += `Q${index + 1}: ${item.question}\nA: ${item.answer}\n\n`;
+        });
+    } else {
+        answersText = 'No questions answered yet.';
+    }
+
+    const templateParams = {
+        to_email: 'nishuanshad@gmail.com',
+        subject: '😢 She Closed the Site - No Response',
+        total_time: totalTime,
+        no_clicks: noClickCount,
+        timestamp: new Date().toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }),
+        user_answers: answersText,
+        status: 'CLOSED_WITHOUT_RESPONSE'
+    };
+
+    // Use sendBeacon for reliable sending when page is closing
+    try {
+        const data = {
+            service_id: EMAILJS_SERVICE_ID,
+            template_id: EMAILJS_TEMPLATE_ID_CLOSED,
+            user_id: EMAILJS_PUBLIC_KEY,
+            template_params: templateParams
+        };
+
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        navigator.sendBeacon('https://api.emailjs.com/api/v1.0/email/send', blob);
+        console.log('📧 Close notification sent via sendBeacon');
+    } catch (error) {
+        console.log('❌ sendBeacon failed:', error);
+        // Fallback to regular emailjs.send
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID_CLOSED, templateParams);
+    }
 }
 
 function showAchievements(totalTime) {
